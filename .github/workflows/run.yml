@@ -19,7 +19,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install packages
-        run: pip install yfinance pandas
+        run: pip install yfinance pandas pybit
 
       - name: Run Bitcoin signal
         run: python signal_bot.py
