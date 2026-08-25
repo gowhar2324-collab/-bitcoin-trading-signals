@@ -1,5 +1,7 @@
 import yfinance as yf
 import pandas as pd
+import os
+from pybit.unified_trading import HTTP
 
 # Bitcoin weekly data
 btc = yf.download("BTC-USD", period="2y", interval="1wk", auto_adjust=True)
@@ -27,3 +29,25 @@ print(f"Price: ${price:,.2f}")
 print(f"SMA 20: ${sma20:,.2f}")
 print(f"SMA 50: ${sma50:,.2f}")
 print(f"Signal: {signal}")
+# Bybit connection test (read-only)
+api_key = os.getenv("BYBIT_API_KEY")
+api_secret = os.getenv("BYBIT_API_SECRET")
+
+if not api_key or not api_secret:
+    raise RuntimeError("Bybit API credentials are missing")
+
+testnet = os.getenv("BYBIT_TESTNET", "false").lower() == "true"
+
+session = HTTP(
+    testnet=testnet,
+    api_key=api_key,
+    api_secret=api_secret,
+)
+
+balance = session.get_wallet_balance(
+    accountType="UNIFIED",
+    coin="USDT",
+)
+
+print("Bybit API connection: OK")
+print("Bybit account response received.")
