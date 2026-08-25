@@ -8,6 +8,9 @@ on:
 jobs:
   signal:
     runs-on: ubuntu-latest
+    env:
+      BYBIT_API_KEY: ${{ secrets.BYBIT_API_KEY }}
+      BYBIT_API_SECRET: ${{ secrets.BYBIT_API_SECRET }}
 
     steps:
       - name: Checkout
